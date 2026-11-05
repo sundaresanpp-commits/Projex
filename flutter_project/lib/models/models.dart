@@ -32,6 +32,43 @@ class User {
     this.followers = 0,
     this.following = 0,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'college': college,
+      'department': department,
+      'year': year,
+      'avatarUrl': avatarUrl,
+      'bio': bio,
+      'skills': skills,
+      'projectCount': projectCount,
+      'followers': followers,
+      'following': following,
+    };
+  }
+
+  factory User.fromMap(Map<String, dynamic> map, String id) {
+    return User(
+      id: id,
+      name: map['name'] as String? ?? '',
+      email: map['email'] as String? ?? '',
+      college: map['college'] as String? ?? '',
+      department: map['department'] as String? ?? '',
+      year: map['year'] as String? ?? '',
+      avatarUrl: map['avatarUrl'] as String?,
+      bio: map['bio'] as String?,
+      skills: (map['skills'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          const [],
+      projectCount: (map['projectCount'] as num?)?.toInt() ?? 0,
+      followers: (map['followers'] as num?)?.toInt() ?? 0,
+      following: (map['following'] as num?)?.toInt() ?? 0,
+    );
+  }
 }
 
 class TeamMember {

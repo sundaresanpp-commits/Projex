@@ -188,7 +188,7 @@ class _FeedTab extends StatelessWidget {
   }
 
   Widget _buildSectionTabs(BuildContext context) {
-    return SliverToBoxAdapter(child: _SectionTabs());
+    return const SliverToBoxAdapter(child: _SectionTabs());
   }
 
   Widget _buildEmptyState(BuildContext context) {

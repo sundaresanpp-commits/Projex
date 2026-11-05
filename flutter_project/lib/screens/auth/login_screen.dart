@@ -29,18 +29,18 @@ class _LoginScreenState extends State<LoginScreen> {
   void _login() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isLoading = true);
-    await Future.delayed(const Duration(milliseconds: 800));
+    final error = await context
+        .read<AppProvider>()
+        .login(_emailCtrl.text.trim(), _passCtrl.text);
     if (!mounted) return;
-    final loggedIn =
-        context.read<AppProvider>().login(_emailCtrl.text, _passCtrl.text);
-    if (!loggedIn) {
+    if (error != null) {
       setState(() => _isLoading = false);
-      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid college email or password.')),
+        SnackBar(content: Text(error)),
       );
       return;
     }
+    setState(() => _isLoading = false);
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => const HomeScreen()),

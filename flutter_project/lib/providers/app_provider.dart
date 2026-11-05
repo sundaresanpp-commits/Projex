@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import '../models/models.dart';
 import '../data/mock_data.dart';
+import '../services/auth_service.dart';
 
 class AppProvider extends ChangeNotifier {
+  final AuthService _authService = AuthService();
   User? _currentUser;
   final List<User> _users = List<User>.from(mockUsers);
   List<Project> _projects = [];
@@ -19,6 +21,32 @@ class AppProvider extends ChangeNotifier {
     _comments = {
       'p1': List<Comment>.from(mockComments),
     };
+    _initAuthState();
+  }
+
+  void _initAuthState() {
+    _authService.authStateChanges.listen((fbUser) {
+      if (fbUser != null && _currentUser == null) {
+        final matching = _users.where(
+          (u) =>
+              u.id == fbUser.uid ||
+              u.email.toLowerCase() == (fbUser.email ?? '').toLowerCase(),
+        );
+        if (matching.isNotEmpty) {
+          _currentUser = matching.first;
+        } else {
+          _currentUser = User(
+            id: fbUser.uid,
+            name: fbUser.displayName ?? fbUser.email?.split('@').first ?? 'Student',
+            email: fbUser.email ?? '',
+            college: 'College',
+            department: 'Department',
+            year: '1st Year',
+          );
+        }
+        notifyListeners();
+      }
+    });
   }
 
   User? get currentUser => _currentUser;
@@ -53,37 +81,68 @@ class AppProvider extends ChangeNotifier {
 
   bool get isLoggedIn => _currentUser != null;
 
-  bool login(String email, String password) {
+  Future<String?> login(String email, String password) async {
     final normalizedEmail = email.trim().toLowerCase();
-    final matchingUsers = _users.where(
+    final matchingMock = _users.where(
       (user) => user.email.toLowerCase() == normalizedEmail,
     );
-    if (matchingUsers.isEmpty || password.length < 6) {
-      return false;
+
+    try {
+      final user = await _authService.signInWithEmailAndPassword(
+        email: normalizedEmail,
+        password: password,
+      );
+      _currentUser = user;
+      final existingIndex = _users.indexWhere((u) => u.id == user.id);
+      if (existingIndex == -1) {
+        _users.add(user);
+      } else {
+        _users[existingIndex] = user;
+      }
+      notifyListeners();
+      return null;
+    } catch (e) {
+      if (matchingMock.isNotEmpty && password.length >= 6) {
+        _currentUser = matchingMock.first;
+        notifyListeners();
+        return null;
+      }
+      return AuthService.getErrorMessage(e);
     }
-    _currentUser = matchingUsers.first;
-    notifyListeners();
-    return true;
   }
 
-  void register(String name, String email, String college, String department,
-      String year, String password) {
-    final user = User(
-      id: 'u_${DateTime.now().microsecondsSinceEpoch}',
-      name: name,
-      email: email,
-      college: college,
-      department: department,
-      year: year,
-      bio: '',
-      skills: [],
-    );
-    _users.add(user);
-    _currentUser = user;
-    notifyListeners();
+  Future<String?> register(
+    String name,
+    String email,
+    String college,
+    String department,
+    String year,
+    String password,
+  ) async {
+    try {
+      final user = await _authService.registerWithEmailAndPassword(
+        name: name,
+        email: email.trim().toLowerCase(),
+        college: college,
+        department: department,
+        year: year,
+        password: password,
+      );
+      _users.add(user);
+      _currentUser = user;
+      notifyListeners();
+      return null;
+    } catch (e) {
+      return AuthService.getErrorMessage(e);
+    }
   }
 
-  void logout() {
+  Future<void> logout() async {
+    try {
+      await _authService.signOut();
+    } catch (e) {
+      debugPrint('Sign out notice: $e');
+    }
     _currentUser = null;
     notifyListeners();
   }

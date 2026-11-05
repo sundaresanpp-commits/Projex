@@ -48,16 +48,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _register() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isLoading = true);
-    await Future.delayed(const Duration(milliseconds: 800));
-    if (!mounted) return;
-    context.read<AppProvider>().register(
-          _nameCtrl.text,
-          _emailCtrl.text,
-          _collegeCtrl.text,
-          _deptCtrl.text,
+    final error = await context.read<AppProvider>().register(
+          _nameCtrl.text.trim(),
+          _emailCtrl.text.trim(),
+          _collegeCtrl.text.trim(),
+          _deptCtrl.text.trim(),
           _selectedYear,
           _passCtrl.text,
         );
+    if (!mounted) return;
+    if (error != null) {
+      setState(() => _isLoading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error)),
+      );
+      return;
+    }
+    setState(() => _isLoading = false);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (_) => const HomeScreen()),

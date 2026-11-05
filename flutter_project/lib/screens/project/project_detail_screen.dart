@@ -197,7 +197,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           Icon(icon, size: 18, color: color),
           const SizedBox(width: 5),
           Text(value,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: AppColors.textSecondary)),

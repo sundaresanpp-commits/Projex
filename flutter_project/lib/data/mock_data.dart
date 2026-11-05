@@ -1,6 +1,6 @@
 import '../models/models.dart';
 
-final User currentUser = User(
+const User currentUser = User(
   id: 'u1',
   name: 'Arjun Sharma',
   email: 'arjun.sharma@iit.ac.in',
@@ -69,9 +69,9 @@ List<Project> mockProjects = [
     college: 'IIT Bombay',
     mentorName: 'Dr. Rakesh Gupta',
     teamMembers: [
-      TeamMember(userId: 'u1', name: 'Arjun Sharma', role: 'ML Engineer'),
-      TeamMember(userId: 'u2', name: 'Priya Patel', role: 'Backend Dev'),
-      TeamMember(userId: 'u4', name: 'Sneha Reddy', role: 'Data Scientist'),
+      const TeamMember(userId: 'u1', name: 'Arjun Sharma', role: 'ML Engineer'),
+      const TeamMember(userId: 'u2', name: 'Priya Patel', role: 'Backend Dev'),
+      const TeamMember(userId: 'u4', name: 'Sneha Reddy', role: 'Data Scientist'),
     ],
     thumbnailUrl:
         'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600',
@@ -96,8 +96,8 @@ List<Project> mockProjects = [
     college: 'NIT Surat',
     mentorName: 'Prof. Meena Shah',
     teamMembers: [
-      TeamMember(userId: 'u2', name: 'Priya Patel', role: 'Hardware Lead'),
-      TeamMember(userId: 'u3', name: 'Rahul Verma', role: 'Embedded Systems'),
+      const TeamMember(userId: 'u2', name: 'Priya Patel', role: 'Hardware Lead'),
+      const TeamMember(userId: 'u3', name: 'Rahul Verma', role: 'Embedded Systems'),
     ],
     thumbnailUrl:
         'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600',
@@ -120,8 +120,8 @@ List<Project> mockProjects = [
     college: 'BITS Pilani',
     mentorName: 'Dr. Arun Kumar',
     teamMembers: [
-      TeamMember(userId: 'u3', name: 'Rahul Verma', role: 'Robotics Lead'),
-      TeamMember(userId: 'u1', name: 'Arjun Sharma', role: 'Software Dev'),
+      const TeamMember(userId: 'u3', name: 'Rahul Verma', role: 'Robotics Lead'),
+      const TeamMember(userId: 'u1', name: 'Arjun Sharma', role: 'Software Dev'),
     ],
     thumbnailUrl:
         'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600',
@@ -144,7 +144,7 @@ List<Project> mockProjects = [
     college: 'VIT Vellore',
     mentorName: 'Dr. Lakshmi Prasad',
     teamMembers: [
-      TeamMember(userId: 'u4', name: 'Sneha Reddy', role: 'ML Researcher'),
+      const TeamMember(userId: 'u4', name: 'Sneha Reddy', role: 'ML Researcher'),
     ],
     thumbnailUrl:
         'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600',
@@ -166,8 +166,8 @@ List<Project> mockProjects = [
     college: 'IIT Bombay',
     mentorName: 'Prof. Vijay Sharma',
     teamMembers: [
-      TeamMember(userId: 'u1', name: 'Arjun Sharma', role: 'Blockchain Dev'),
-      TeamMember(userId: 'u4', name: 'Sneha Reddy', role: 'Smart Contracts'),
+      const TeamMember(userId: 'u1', name: 'Arjun Sharma', role: 'Blockchain Dev'),
+      const TeamMember(userId: 'u4', name: 'Sneha Reddy', role: 'Smart Contracts'),
     ],
     thumbnailUrl:
         'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600',
@@ -189,8 +189,8 @@ List<Project> mockProjects = [
     college: 'NIT Surat',
     mentorName: 'Dr. Kamal Bansal',
     teamMembers: [
-      TeamMember(userId: 'u2', name: 'Priya Patel', role: 'CV Engineer'),
-      TeamMember(userId: 'u3', name: 'Rahul Verma', role: 'Mobile Dev'),
+      const TeamMember(userId: 'u2', name: 'Priya Patel', role: 'CV Engineer'),
+      const TeamMember(userId: 'u3', name: 'Rahul Verma', role: 'Mobile Dev'),
     ],
     thumbnailUrl:
         'https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=600',
